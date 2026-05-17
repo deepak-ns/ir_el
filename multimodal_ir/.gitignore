@@ -12,21 +12,23 @@ venv/
 .venv/
 env/
 
-# Data (large files — do not commit)
-data/raw/
-data/processed/*.db
-data/figures/
-data/indices/
-data/processed/
-data/pages/
+# Ignore contents but keep folders
+
+data/raw/*
+data/processed/*
+data/figures/*
+data/indices/*
+data/pages/*
+
+# Specific ignored files
 data/eval_results.json
 
-# Keep directory structure
+# Allow .gitkeep files
 !data/raw/.gitkeep
 !data/processed/.gitkeep
 !data/figures/.gitkeep
 !data/indices/.gitkeep
-
+!data/pages/.gitkeep
 # Secrets
 .env
 
