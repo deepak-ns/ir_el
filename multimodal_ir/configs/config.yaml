@@ -1,0 +1,63 @@
+# configs/config.yaml
+# Central configuration for the entire pipeline
+
+data:
+  raw_dir: "data/raw"
+  processed_dir: "data/processed"
+  figures_dir: "data/figures"
+  pages_dir: "data/pages"
+  indices_dir: "data/indices"
+  db_path: "data/processed/corpus.db"
+  max_papers: 10000          # Set lower (e.g. 500) for quick dev runs
+  max_figures_per_paper: 10
+
+embedding:
+  text:
+    model_name: "all-mpnet-base-v2"
+    dim: 768
+    batch_size: 64
+    max_seq_length: 512
+  figure:
+    model_name: "openai/clip-vit-base-patch32"
+    dim: 512
+    batch_size: 32
+    image_size: 224
+
+retrieval:
+  faiss:
+    text:
+      index_type: "IVF100,PQ8"   # IVF with 100 centroids, PQ 8 sub-quantizers
+      nprobe: 10                  # Cells to visit at query time (speed/accuracy tradeoff)
+    figure:
+      index_type: "IVF100,PQ8"
+      nprobe: 10
+  bm25:
+    k1: 1.5
+    b: 0.75
+  top_k: 100                     # Candidates retrieved before re-ranking
+  final_k: 10                    # Results returned to user
+
+fusion:
+  default_alpha: 0.6             # Weight for text score  (α)
+  default_beta: 0.4              # Weight for figure score (β)
+  # Per-type overrides learned by calibration (scripts/calibrate_fusion.py)
+  text_query_alpha: 0.85
+  text_query_beta: 0.15
+  figure_query_alpha: 0.2
+  figure_query_beta: 0.8
+  cross_modal_alpha: 0.45
+  cross_modal_beta: 0.55
+
+api:
+  host: "0.0.0.0"
+  port: 8000
+  reload: true
+
+ui:
+  port: 8501
+  api_base_url: "http://localhost:8000"
+
+evaluation:
+  test_queries_path: "data/test_queries.json"
+  relevance_judgments_path: "data/relevance_judgments.json"
+  k_values: [1, 5, 10]

@@ -1,0 +1,47 @@
+# Python
+__pycache__/
+*.py[cod]
+*.egg-info/
+dist/
+build/
+.eggs/
+*.egg
+
+# Virtual environments
+venv/
+.venv/
+env/
+
+# Data (large files — do not commit)
+data/raw/
+data/processed/*.db
+data/figures/
+data/indices/
+data/processed/
+data/pages/
+data/eval_results.json
+
+# Keep directory structure
+!data/raw/.gitkeep
+!data/processed/.gitkeep
+!data/figures/.gitkeep
+!data/indices/.gitkeep
+
+# Secrets
+.env
+
+# IDE
+.vscode/
+.idea/
+*.swp
+
+# Jupyter
+.ipynb_checkpoints/
+notebooks/.ipynb_checkpoints/
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Model cache (HuggingFace downloads)
+~/.cache/huggingface/
